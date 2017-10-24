@@ -18,6 +18,8 @@ troop <- function(data,
 	# TODO : make log_file an input
 	log_file <- 'cluster.log'
 	file.create(log_file)
+	
+	# disable hyperthreading
 	Sys.setenv(OMP_THREAD_LIMIT = 1)
 
 	do.call(preprocess_func, preprocess_args)
