@@ -1,0 +1,13 @@
+Package: troop
+Title: Groupby and Apply Function to a data.table Using Parallel Processing
+Version: 0.0.0.9000
+Authors@R: person("Tejas", "Lodaya", email = "tejas.lodaya1@gmail.com", role = c("aut", "cre"))
+Description: Given a data.table, chunks it based on group-by and applies the given function parallelly across available cores for blazingly fast processing
+Depends: R (>= 3.3.2)
+License: NA
+Encoding: UTF-8
+LazyData: true
+Imports: doParallel,
+    foreach,
+    parallel,
+    data.table
