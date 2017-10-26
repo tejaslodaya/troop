@@ -59,10 +59,10 @@ nextElem.iblkgrouprow <- function(obj) obj$nextElem()
 #' @param files_to_source character vector of file names to be sourced on each core. the userr should have permission to read the file
 #' @return result of apply_func after combining results from each core using combine parameter above
 #' @seealso \code{\link{http://stat.ethz.ch/R-manual/R-devel/library/parallel/doc/parallel.pdf}}
-#'   http://r.adu.org.za/web/packages/foreach/vignettes/foreach.pdf
-#'   https://cran.r-project.org/web/packages/doParallel/vignettes/gettingstartedParallel.pdf
-#'   http://michaeljkoontz.weebly.com/uploads/1/9/9/4/19940979/parallel.pdf
-#'   https://cran.r-project.org/web/packages/iterators/vignettes/writing.pdf
+#'   \code{\link{http://r.adu.org.za/web/packages/foreach/vignettes/foreach.pdf}}
+#'   \code{\link{https://cran.r-project.org/web/packages/doParallel/vignettes/gettingstartedParallel.pdf}}
+#'   \code{\link{http://michaeljkoontz.weebly.com/uploads/1/9/9/4/19940979/parallel.pdf}}
+#'   \code{\link{https://cran.r-project.org/web/packages/iterators/vignettes/writing.pdf}}
 #' @export
 #' @examples
 #' dt <- data.table(fread('sample.csv'))
@@ -78,45 +78,44 @@ troop <- function(data, by, apply_func, preprocess_func = function() {
 }, postprocess_func = function() {
 }, num_chunks = detectCores(logical = TRUE), preprocess_args = list(), postprocess_args = list(), packages = c(), export = c(), combine = "c", 
     files_to_source = c()) {
-  
-  # TODO : make log_file an input
-  log_file <- "cluster.log"
-  file.create(log_file)
-  
-  do.call(preprocess_func, preprocess_args)
-  
-  # initialize cluster
-  cl <- parallel::makeCluster(num_chunks, outfile = log_file)
-  doParallel::registerDoParallel(cl)
-  
+   
+   # TODO : make log_file an input
+   log_file <- "cluster.log"
+   file.create(log_file)
+   
+   do.call(preprocess_func, preprocess_args)
+   
+  cl <- makeCluster(num_chunks, outfile = log_file)
+  registerDoParallel(cl)
+
   packages <- c(packages, "foreach", "data.table")
-  
+
   # core logic goes here
   if (missing(by)) {
     itr <- iblkrow(data = data, chunks = num_chunks)
   } else {
     itr <- iblkgrouprow(data = data, by = by, chunks = num_chunks)
   }
-    
-  resR <- foreach::foreach(x = itr, .packages = packages, .export = export, .combine = combine) %dopar% {
+
+  resR <- foreach(x = itr, .packages = packages, .export = export, .combine = combine) %dopar% {
     # source file on each core
     sapply(files_to_source, source)
     if (missing(by)) {
       apply_func(x)
     } else {
-      combinations <- data.table:::unique.data.table(x, by = by)[, ..by]
+      combinations <- unique(x, by = by)[, ..by]
       setkeyv(x, by)
-      res <- foreach:::foreach(i = 1:nrow(combinations)) %do% {
+      res <- foreach(i = 1:nrow(combinations)) %do% {
         itr_comb <- combinations[i, ]
         itr_data <- x[(itr_comb), nomatch = 0]
-            
+
         apply_func(itr_data)
         }
       return(res)
       }
   }
-  
+
   do.call(postprocess_func, postprocess_args)
-  on.exit(parallel::stopCluster(cl))
+  on.exit(stopCluster(cl))
   return(resR)
 }
