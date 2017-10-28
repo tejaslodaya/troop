@@ -24,7 +24,7 @@ install.packages("devtools")
 devtools::install_github("tejaslodaya/troop")
 ```
 
-Thats it! Now you can use the library from your machine.
+Thats it! Now you can use the package on your machine
 
 ## Example
 
