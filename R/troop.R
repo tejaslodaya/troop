@@ -18,7 +18,9 @@ iblkrow <- function(data, chunks) {
     
   }
   
-  structure(list(nextElem = nextElem), class = c("iblkrow", "iter"))
+  obj <- list(nextElem = nextElem)
+  class(obj) <- c('iblkrow','abstractiter','iter')
+  obj
 }
 
 # over-riding default iterator
@@ -36,7 +38,10 @@ iblkgrouprow <- function(data, by, chunks) {
     comb <- nextElem(itr)
     data[(comb), nomatch = 0]
   }
-  structure(list(nextElem = nextElemGroup), class = c("iblkgrouprow", "iter"))
+  
+  obj <- list(nextElem = nextElemGroup)
+  class(obj) <- c('iblkrowgroup','abstractiter','iter')
+  obj
 }
 
 # over-riding default iterator
@@ -57,12 +62,12 @@ nextElem.iblkgrouprow <- function(obj) obj$nextElem()
 #' @param export character vector of variable names to be exported on each core. NOTE: each variable name to be accessed inside apply_func should be exported
 #' @param combine the way results should be combined. accepts: c, +, rbind. defaults to c (character vector)
 #' @param files_to_source character vector of file names to be sourced on each core. the userr should have permission to read the file
-#' @return result of apply_func after combining results from each core using combine parameter above
-#' @seealso \code{\link{http://stat.ethz.ch/R-manual/R-devel/library/parallel/doc/parallel.pdf}}
-#'   \code{\link{http://r.adu.org.za/web/packages/foreach/vignettes/foreach.pdf}}
-#'   \code{\link{https://cran.r-project.org/web/packages/doParallel/vignettes/gettingstartedParallel.pdf}}
-#'   \code{\link{http://michaeljkoontz.weebly.com/uploads/1/9/9/4/19940979/parallel.pdf}}
-#'   \code{\link{https://cran.r-project.org/web/packages/iterators/vignettes/writing.pdf}}
+#' @return result of \code{apply_func} after combining results from each core using combine parameter above
+#' @seealso \code{\link{http://stat.ethz.ch/R-manual/R-devel/library/parallel/doc/parallel.pdf}} \cr
+#'   \code{\link{http://r.adu.org.za/web/packages/foreach/vignettes/foreach.pdf}} \cr
+#'   \code{\link{https://cran.r-project.org/web/packages/doParallel/vignettes/gettingstartedParallel.pdf}} \cr
+#'   \code{\link{http://michaeljkoontz.weebly.com/uploads/1/9/9/4/19940979/parallel.pdf}} \cr
+#'   \code{\link{https://cran.r-project.org/web/packages/iterators/vignettes/writing.pdf}} \cr
 #' @export
 #' @examples
 #' dt <- data.table(fread('sample.csv'))

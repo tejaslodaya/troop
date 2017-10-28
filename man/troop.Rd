@@ -35,7 +35,7 @@ troop(data, by, apply_func, preprocess_func = function() { },
 \item{files_to_source}{character vector of file names to be sourced on each core. the userr should have permission to read the file}
 }
 \value{
-result of apply_func after combining results from each core using combine parameter above
+result of \code{apply_func} after combining results from each core using combine parameter above
 }
 \description{
 group by - apply - multiprocess data.table
@@ -52,9 +52,9 @@ troop(dt, by = c('column1','column2'), apply_func = foo, files_to_source = c('so
 troop(dt, by = c('column1','column2'), apply_func = foo, num_chunks = 10, packages = c('RODBC','xgboost'), export = c('v'), combine = 'c')
 }
 \seealso{
-\code{\link{http://stat.ethz.ch/R-manual/R-devel/library/parallel/doc/parallel.pdf}}
-  \code{\link{http://r.adu.org.za/web/packages/foreach/vignettes/foreach.pdf}}
-  \code{\link{https://cran.r-project.org/web/packages/doParallel/vignettes/gettingstartedParallel.pdf}}
-  \code{\link{http://michaeljkoontz.weebly.com/uploads/1/9/9/4/19940979/parallel.pdf}}
-  \code{\link{https://cran.r-project.org/web/packages/iterators/vignettes/writing.pdf}}
+\code{\link{http://stat.ethz.ch/R-manual/R-devel/library/parallel/doc/parallel.pdf}} \cr
+  \code{\link{http://r.adu.org.za/web/packages/foreach/vignettes/foreach.pdf}} \cr
+  \code{\link{https://cran.r-project.org/web/packages/doParallel/vignettes/gettingstartedParallel.pdf}} \cr
+  \code{\link{http://michaeljkoontz.weebly.com/uploads/1/9/9/4/19940979/parallel.pdf}} \cr
+  \code{\link{https://cran.r-project.org/web/packages/iterators/vignettes/writing.pdf}} \cr
 }
