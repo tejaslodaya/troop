@@ -1,6 +1,6 @@
 # troop
 
-Pre-requisites for troop - 
+Prerequisites
 
 1. If you are able to identify repeated patterns in R code and exploit to greatly improve efficiency, both within a multi-core machine and for communication across machines. 
 2. If you can replace dynamic cache and server structures with static pre-serialized structures
