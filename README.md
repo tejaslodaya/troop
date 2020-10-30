@@ -100,7 +100,7 @@ Please read [CONTRIBUTING.md](https://github.com/tejaslodaya/troop/blob/master/C
 
 ### Authors
 
-* **Tejas Lodaya** - [tejaslodaya.me](https://tejaslodaya.com)
+* **Tejas Lodaya** - [tejaslodaya.com](https://tejaslodaya.com)
 
 ### License
 
