@@ -111,7 +111,7 @@ troop <- function(data, by, apply_func, preprocess_func = function() {
     } else {
       combinations <- unique(x, by = by)[, ..by]
       setkeyv(x, by)
-      res <- foreach(i = 1:nrow(combinations)) %do% {
+      res <- foreach(i = 1:nrow(combinations)) %do% { # each combination inside a chunk is processed serially - happens when num_chunks > logical cores
         itr_comb <- combinations[i, ]
         itr_data <- x[(itr_comb), nomatch = 0]
 
