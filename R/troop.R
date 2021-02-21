@@ -89,7 +89,8 @@ troop <- function(data, by, apply_func, preprocess_func = function() {
    file.create(log_file)
    
    do.call(preprocess_func, preprocess_args)
-   
+  
+  # TODO: `num_chunks` might be different than the number of cores. Practically, num_chunks >= logical cores
   cl <- makeCluster(num_chunks, outfile = log_file)
   registerDoParallel(cl)
 
